@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .container-page {
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+:root {
+  --font-inter: 'Inter';
+  --font-montserrat: 'Montserrat';
+  --brand-green-950: #003f3a;
+  --brand-green-900: #00564f;
+  --brand-green-800: #09665e;
+  --brand-yellow-500: #ffd400;
+  --seal-yellow: #ffeb00;
+  --seal-green: #00a651;
+  --seal-red: #e63238;
+  --ink-900: #252525;
+  --ink-600: #626a66;
+  --surface-50: #f6f7f4;
+}
+
+body {
+  color: var(--ink-900);
+  background: var(--surface-50);
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+*:focus-visible {
+  outline: 2px solid var(--brand-green-900);
+  outline-offset: 3px;
+}
+
+/* High-contrast focus indicator on dark surfaces (WCAG 2.2 SC 2.4.11) */
+.bg-brand-900 *:focus-visible,
+.bg-brand-950 *:focus-visible,
+[class*='bg-brand-9'] *:focus-visible,
+.bg-brand-900:focus-visible,
+.bg-brand-950:focus-visible,
+[class*='bg-brand-9']:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 3px;
+}
+
+a, button {
+  transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease;
+}
+
+/*
+ * First-visit splash. The overlay is server-rendered so it paints before the
+ * page content; the inline gate script in layout.tsx sets data-splash="off"
+ * before first paint for repeat visits / reduced motion. The CSS dismiss
+ * animation runs from first paint (in sync with the progress bar) and also
+ * covers the no-JS case. Timing must match SPLASH_VISIBLE_MS/SPLASH_FADE_MS.
+ */
+html[data-splash='off'] [data-testid='first-visit-splash'] {
+  display: none;
+}
+
+[data-testid='first-visit-splash'] {
+  animation: splash-dismiss 300ms ease-out 3000ms forwards;
+}
+
+.splash-progress {
+  transform-origin: left;
+  animation: splash-progress 3000ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes splash-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes splash-dismiss {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-progress {
+    animation: none;
+  }
+
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

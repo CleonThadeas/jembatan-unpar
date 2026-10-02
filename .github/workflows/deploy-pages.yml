@@ -15,21 +15,25 @@ jobs:
         with:
           node-version: '22'
           cache: npm
+      # Exposed as a step output (not $GITHUB_ENV) so unit tests run with the default empty base path.
       - name: Configure project path
+        id: path
         shell: bash
         run: |
           REPO="${GITHUB_REPOSITORY#*/}"
           OWNER="${GITHUB_REPOSITORY_OWNER,,}"
           if [ "${REPO,,}" = "$OWNER.github.io" ]; then
-            printf 'NEXT_PUBLIC_BASE_PATH=\n' >> "$GITHUB_ENV"
+            printf 'base_path=\n' >> "$GITHUB_OUTPUT"
           else
-            printf 'NEXT_PUBLIC_BASE_PATH=/%s\n' "$REPO" >> "$GITHUB_ENV"
+            printf 'base_path=/%s\n' "$REPO" >> "$GITHUB_OUTPUT"
           fi
       - run: npm ci
       - run: npm run type-check
       - run: npm run lint
       - run: npm test
       - run: npm run build
+        env:
+          NEXT_PUBLIC_BASE_PATH: ${{ steps.path.outputs.base_path }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: out

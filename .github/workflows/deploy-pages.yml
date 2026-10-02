@@ -16,13 +16,16 @@ jobs:
           node-version: '22'
           cache: npm
       # Exposed as a step output (not $GITHUB_ENV) so unit tests run with the default empty base path.
+      # Set the repository variable PAGES_CUSTOM_DOMAIN when the site is served from its own (sub)domain root.
       - name: Configure project path
         id: path
         shell: bash
+        env:
+          CUSTOM_DOMAIN: ${{ vars.PAGES_CUSTOM_DOMAIN }}
         run: |
           REPO="${GITHUB_REPOSITORY#*/}"
           OWNER="${GITHUB_REPOSITORY_OWNER,,}"
-          if [ "${REPO,,}" = "$OWNER.github.io" ]; then
+          if [ -n "$CUSTOM_DOMAIN" ] || [ "${REPO,,}" = "$OWNER.github.io" ]; then
             printf 'base_path=\n' >> "$GITHUB_OUTPUT"
           else
             printf 'base_path=/%s\n' "$REPO" >> "$GITHUB_OUTPUT"

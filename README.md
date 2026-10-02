@@ -57,7 +57,7 @@ Repository: https://github.com/CleonThadeas/jembatan-unpar — situs setelah dep
 3. Workflow memasang dependency, menjalankan checks, build, dan deploy `out/`.
 4. Buka https://cleonthadeas.github.io/jembatan-unpar/ setelah job selesai.
 
-Workflow hanya dipicu manual (`workflow_dispatch`), jadi push tidak otomatis deploy. BasePath otomatis `/<nama-repository>` untuk project-site, atau kosong untuk repository `<owner>.github.io`. Tanggal acuan memakai default tetap 2 Oktober 2026 agar komposisi 9 aktif / 3 lewat tenggat selalu konsisten.
+Workflow hanya dipicu manual (`workflow_dispatch`), jadi push tidak otomatis deploy. BasePath otomatis `/<nama-repository>` untuk project-site, atau kosong untuk repository `<owner>.github.io`. Jika situs memakai custom (sub)domain sendiri, isi repository variable `PAGES_CUSTOM_DOMAIN` (Settings → Secrets and variables → Actions → Variables) agar basePath kosong, lalu jalankan ulang workflow. Tanggal acuan memakai default tetap 2 Oktober 2026 agar komposisi 9 aktif / 3 lewat tenggat selalu konsisten.
 
 ### Build manual untuk project-site
 

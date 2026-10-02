@@ -50,12 +50,12 @@ Lampiran disimpan lokal; jangan mengunggah berkas pribadi. Foto dan aset telah d
 
 ### Cara yang disediakan: GitHub Actions
 
-Repository: https://github.com/CleonThadeas/jembatan-unpar — situs setelah deploy: https://cleonthadeas.github.io/jembatan-unpar/
+Repository: https://github.com/CleonThadeas/jembatan-unpar — situs: https://jembatan.andrixlab.codes/ (custom domain, CNAME `jembatan` → `cleonthadeas.github.io` di Cloudflare, mode DNS only)
 
 1. Repository Settings → Pages → Build and deployment → Source **GitHub Actions**.
 2. Actions → **Deploy static prototype** → **Run workflow** (branch `main`).
 3. Workflow memasang dependency, menjalankan checks, build, dan deploy `out/`.
-4. Buka https://cleonthadeas.github.io/jembatan-unpar/ setelah job selesai.
+4. Buka https://jembatan.andrixlab.codes/ setelah job selesai.
 
 Workflow hanya dipicu manual (`workflow_dispatch`), jadi push tidak otomatis deploy. BasePath otomatis `/<nama-repository>` untuk project-site, atau kosong untuk repository `<owner>.github.io`. Jika situs memakai custom (sub)domain sendiri, isi repository variable `PAGES_CUSTOM_DOMAIN` (Settings → Secrets and variables → Actions → Variables) agar basePath kosong, lalu jalankan ulang workflow. Tanggal acuan memakai default tetap 2 Oktober 2026 agar komposisi 9 aktif / 3 lewat tenggat selalu konsisten.
 
